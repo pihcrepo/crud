@@ -1,0 +1,86 @@
+<div class="bg-white shadow-xl p-5 rounded-xl flex flex-col justify-between">
+
+    <div class="flex justify-between items-center mb-3">
+        <div class="flex gap-3">
+
+            Show<select name="" id="" class="outline-none focus:border cursor-pointer rounded-xl">
+                <option value="">5</option>
+                <option value="">10</option>
+                <option value="">15</option>
+                <option value="">20</option>
+            </select> entries
+        </div>
+
+        <div class="flex items-center p-1 rounded-[50%] cursor-pointer hover:bg-gray">
+            Add
+        </div>
+    </div>
+
+    <div [class]="tablecss">
+        <table class="w-full ">
+            <thead class="w-full">
+
+                <tr class="text-2xl leading-[4rem] bg-gray border-b border-grayline text-main font-bold">
+                    <td *ngFor="let e of columns">
+                        <div class="flex items-center gap-3">{{e.charAt(0).toUpperCase() + e.slice(1)}} <img
+                                src="assets/arrowupdown.svg" alt='' class="w-5 h-5 cursor-pointer hover:scale-125"
+                                (click)="rearrange(e)" /></div>
+                    </td>
+                    <td class="text-center">Action</td>
+                </tr>
+
+            </thead>
+            <tbody class="">
+                <tr *ngFor="let e of visibleItems" class="text-tabletext leading-[3rem] border-b border-grayline">
+                    <td *ngFor="let col of columns">
+                        <div *ngIf="![1,2,3].includes(e[col])"
+                            class="{{isNumber(e[col]) ? 'text-right pr-[30%]' : ''}}">
+                            {{ e[col] }}
+                        </div>
+
+                        <div *ngIf="[1,2,3].includes(e[col])" class="">
+                            <div *ngIf="e[col] == 1"
+                                class="bg-[#99f] w-20 h-6 flex justify-center items-center rounded-md hover:opacity-90 cursor-pointer">
+                                notthing</div>
+                            <div *ngIf="e[col] == 2"
+                                class="bg-[#f99] w-20 h-6 flex justify-center items-center rounded-md hover:opacity-90 cursor-pointer">
+                                notthing</div>
+                            <div *ngIf="e[col] == 3"
+                                class="bg-[#9f9] w-20 h-6 flex justify-center items-center rounded-md hover:opacity-90 cursor-pointer">
+                                notthing</div>
+                        </div>
+                    </td>
+
+                    <td class="">
+                        <div class="flex justify-center gap-3">
+                            <div class="flex justify-center items-center cursor-pointer">
+                                <img src="assets/edit.svg" alt="" class="w-5 h-5">
+                            </div>
+                            <div class="flex justify-center items-center cursor-pointer">
+                                <img src="assets/img/trash.png" alt="" class="w-5 h-5">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex justify-center">
+        <div class="flex justify-between gap-5 h-full">
+            <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="rounded-[50%] transition-all w-full p-3 aspect-square
+                {{currentPage === 1 ? 'cursor-not-allowed hover:bg-none':'hover:bg-background '}}">
+                <img src="assets/chevronLeft.svg" alt="" class="w-5 h-5">
+            </button>
+            <button *ngFor="let page of totalPages()" (click)="goToPage(page)"
+                class="text-center px-5 aspect-square rounded-[50%] {{page === currentPage ? 'text-main bg-background':'hover:bg-gray'}}">
+                {{ page }}
+            </button>
+            <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages().length" class="rounded-[50%] transition-all w-full p-3 
+                {{currentPage === totalPages().length ? 'cursor-not-allowed hover:bg-none':'hover:bg-background '}}">
+                <img src="assets/chevronRight.svg" alt="" class="w-5 h-5">
+            </button>
+        </div>
+    </div>
+
+</div>
